@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STYLE TRACK - Clothing Inventory & Sales System | Matara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #264653;
+      --secondary: #f4a261;
+      --accent: #2a9d8f;
+      --accent2: #e76f51;
+      --bg1: #f7fafc;
+      --bg2: #e9ecef;
+      --bg-gradient: linear-gradient(135deg, #f7fafc 60%, #e9ecef 100%);
+      --bg-dark-gradient: linear-gradient(135deg, #ccd6e3 0%, #f7fafc 100%);
+      --card-bg: #fff;
+      --border-radius: 1rem;
+      --shadow: 0 4px 12px rgba(0,0,0,0.09);
+      --text-dark: #22223b;
+      --text-light: #4a4e69;
+      --button: #2a9d8f;
+      --button-hover: #21867a;
+      --button-text: #fff;
+      --nav-size: 1.08rem;
+      --footer-bg: #264653;
+      --footer-text: #fff;
+      --spacing-lg: 2rem;
+      --transition: 0.2s;
+      --cart-bg: #fafaff;
+      --cart-shadow: 0 8px 20px rgba(64,141,72,0.08);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      height: 100%;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: #FFF;
+      text-align: center;
+      padding: 2.5rem 1rem 1.2rem 1rem;
+      box-shadow: var(--shadow);
+      border-bottom-right-radius: var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+    }
+    header h1 {
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 2px;
+    }
+    header p {
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+    .home-subtitle {
+      max-width: 800px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.15rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    nav {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: var(--nav-size);
+      font-weight: bold;
+      padding: 0.3rem 1.1rem;
+      transition: color var(--transition);
+      border-radius: 22px;
+      display: inline-block;
+    }
+    nav a:hover, nav a.active {
+      color: var(--secondary);
+      background: rgba(244,162,97,0.15);
+      text-decoration: underline;
+    }
+    main {
+      flex: 1 1 auto;
+      max-width: 1200px;
+      margin: var(--spacing-lg) auto var(--spacing-lg) auto;
+      padding: 0 1rem;
+      min-height: 60vh;
+    }
+    section {
+      margin-bottom: 3.5rem;
+      display: none;
+    }
+    section.active {
+      display: block;
+      animation: fadein 0.7s;
+    }
+    @keyframes fadein { from {opacity:.45;} to {opacity:1;} }
+    .section-title {
+      color:var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align:center;
+      letter-spacing:1px;
+      font-weight:700;
+      text-shadow:0 2px 6px rgba(34,34,59,.08);
+    }
+    .menu, .menu-category {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.2rem;
+      justify-content:center;
+      align-items:stretch;
+      margin-top:2.2rem;
+    }
+    .menu-item, .product {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      width: 255px;
+      padding: 1.3rem 1rem 1.1rem 1rem;
+      display: flex; flex-direction: column;
+      align-items: center;
+      transition: transform .18s;
+      position:relative;
+    }
+    .menu-item:hover, .product:hover {
+      transform: scale(1.045);
+      box-shadow: 0 4px 16px rgba(34,34,59,.08);
+    }
+    .menu-item img, .product img {
+      width: 100%; height: 150px; object-fit: cover;
+      border-radius: var(--border-radius);
+      background: #eee;
+      margin-bottom: 0.65rem;
+    }
+    .menu-item h3, .product h3 {
+      margin: 0.65rem 0 0.2rem 0;
+      text-align: center;
+      color: var(--accent);
+      font-size: 1.28rem;
+      font-weight:600;
+    }
+    .menu-item p, .product p, .product .price {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      margin: 0 0 1rem 0;
+    }
+    .product .price {
+      color: var(--accent);
+      font-size: 1.03rem;
+      font-weight: bold;
+      margin-bottom:0.6rem;
+    }
+    .product-description {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+    .btn, .back-btn {
+      background: var(--button);
+      color: var(--button-text);
+      font-weight:600;
+      font-size:1.15rem;
+      border:none; border-radius:.6rem;
+      padding:.68rem 1.13rem; 
+      text-decoration: none;
+      transition:background var(--transition), box-shadow var(--transition);
+      box-shadow:0 2px 18px #2a9d8f18;
+      cursor:pointer; margin-top:.65rem;
+      width: 80%; display: inline-block; text-align: center;
+      outline:none;
+      margin-bottom:.5rem;
+    }
+    .btn:hover, .back-btn:hover, .cart-btn:hover {
+      background: var(--button-hover);
+      box-shadow: 0 6px 28px #2a9d8f18;
+    }
+    .back-btn {
+      background: var(--secondary);
+      color: var(--primary);
+      font-weight:700;
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 12px #f4a2611b;
+      margin-bottom:2rem;
+      width:180px;
+      font-size:1.14rem;
+    }
+    .back-btn:active { background: var(--accent2); color: #fff;}
+    .menu-category { margin-top:1.9rem;}
+    .cart-btn {
+      background: #fff;
+      color: var(--accent2);
+      font-weight:700;
+      border: 2px solid var(--accent2);
+      margin-top: 2rem;
+      margin-bottom:2rem;
+      border-radius:0.6rem;
+      width:180px; font-size:1.14rem;
+    }
+    .cart-btn:hover { background: var(--accent2); color: #fff;}
+    .contact-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding:2.1rem 1.5rem;
+      max-width:430px;
+      margin:3rem auto 0 auto;
+      font-size:1.08rem;
+    }
+    .contact-card h2 { color:var(--secondary); font-size:1.45rem; }
+    .map-container {
+      margin-top: 2rem;
+      height: 400px;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      font-size:1.08rem;
+      padding:1.25rem 0 1.1rem 0;
+      margin-top:2rem;
+      border-top-right-radius:1rem;
+      border-top-left-radius:1rem;
+      box-shadow:0 -2px 8px rgba(38,70,83,.067);
+    }
+    footer .social-links {
+      margin-top:0.5rem;
+    }
+    footer .social-links a {
+      margin: 0 0.7rem; color:var(--button-text);text-decoration: none;
+      font-size:1.32rem; opacity:.8; transition:opacity .2s;
+    }
+    footer .social-links a:hover { opacity:1; }
+    /* Cart sidebar */
+    #cart-sidebar {
+      position: fixed;
+      right: 0; top: 0;
+      width: 340px; height: 100vh;
+      background: var(--cart-bg);
+      box-shadow: var(--cart-shadow);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform .33s;
+      display:flex; flex-direction:column;
+      padding:1.2rem;
+      overflow-y:auto;
+      border-top-left-radius:1.5rem;
+      border-bottom-left-radius:1.5rem;
+      border-left: 2px solid #2a9d8f13;
+    }
+    #cart-sidebar.open { transform:translateX(0);}
+    #cart-sidebar h3 {
+      margin-top:0; color:var(--primary);
+      border-bottom: 2.2px solid var(--accent);
+      padding-bottom:.7rem; font-size:1.25rem;
+      text-align:left; font-weight:700;
+    }
+    #cart-items { flex-grow:1; margin-top:.7rem; overflow-y:auto; }
+    #cart-items p { 
+      margin:.33rem 0; 
+      font-size:.98rem; 
+      color:var(--primary);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:6px;
+    }
+    #cart-total { font-weight:700; margin-top:.9rem; font-size:1.09rem; color:var(--accent);}
+    #cart-close-btn {
+      background: var(--secondary);
+      color: var(--primary);
+      border:none;
+      padding:.45rem .76rem;
+      border-radius:0.48rem;
+      cursor:pointer;
+      align-self:flex-end;
+      margin-bottom:.8rem; font-size:1.2rem; font-weight:700;
+      box-shadow:0 2px 8px #e76f511d;
+    }
+    #open-cart-btn {
+      position: fixed;
+      bottom: 22px; right:22px;
+      background: var(--accent2);
+      border:none;
+      border-radius:50%;
+      width:57px; height:57px;
+      color: white; font-size:2.16rem; font-weight:700;
+      cursor:pointer;
+      box-shadow:0 8px 22px #e76f5112;
+      z-index:1500;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #open-cart-btn:hover { background: var(--accent);}
+    /* Checkout Form */
+    .checkout-form {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e9ecef;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color var(--transition);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(42,157,143,0.1);
+    }
+    .checkout-summary {
+      background: var(--bg2);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--accent);
+    }
+    .order-success {
+      text-align: center;
+      padding: 3rem;
+      background: linear-gradient(135deg, var(--accent), var(--button-hover));
+      color: white;
+      border-radius: var(--border-radius);
+      margin: 2rem 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    @media (max-width:830px) { 
+      .menu, .menu-category { flex-direction:column; align-items:center;}
+      main { padding:0;}
+      .menu-item, .product { width:97vw; max-width:98vw;}
+      #cart-sidebar { width:100vw; border-radius:0; }
+      nav { gap: 1rem; }
+    }
+    @media (max-width:480px) {
+      header {padding:1.3rem 0.2rem .8rem 0.2rem;}
+      nav a { font-size:.97rem;}
+      .section-title { font-size:1.42rem;}
+      .checkout-form { padding: 1.5rem; margin: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>STYLE TRACK - Clothing Inventory & Sales System</h1>
+    <p>Matara | Call us: 0762852829</p>
+    <nav>
+      <a href="#" onclick="showSection('home')" id="nav-home">Home</a>
+      <a href="#" onclick="showSection('clothing')" id="nav-clothing">Clothing</a>
+      <a href="#" onclick="showSection('toys')" id="nav-toys">Toys</a>
+      <a href="#" onclick="showSection('school')" id="nav-school">School Items</a>
+      <a href="#" onclick="showSection('shoes')" id="nav-shoes">Shoes</a>
+      <a href="#" onclick="showSection('contact')" id="nav-contact">Contact</a>
+      <a href="#" id="cart-open-link">Cart</a>
+    </nav>
+  </header>
+  <main>
+    <!-- Home Section -->
+    <section id="home" class="active">
+      <h2 class="section-title">Welcome to Liyana Clothing Shop</h2>
+      <p class="home-subtitle">Matara's very own girls, boys & home — everything your design needs, all in one place.</p>
+      <div class="menu">
+        <div class="menu-item">
+          <img src="clothing.webp" alt="Clothing" />
+          <h3>Clothing</h3>
+          <p>Premium quality apparel for kids with trendy designs and comfortable fabrics.</p>
+          <button class="btn" onclick="showSection('clothing')">Explore More</button>
+        </div>
+        <div class="menu-item">
+          <img src="toys.jpg" alt="Toys" />
+          <h3>Toys</h3>
+          <p>Educational and fun toys that spark imagination and development.</p>
+          <button class="btn" onclick="showSection('toys')">Explore More</button>
+        </div>
+        <div class="menu-item">
+          <img src="schoolitems.jpg" alt="School Items" />
+          <h3>School Items</h3>
+          <p>Durable school essentials designed for daily use and learning.</p>
+          <button class="btn" onclick="showSection('school')">Explore More</button>
+        </div>
+        <div class="menu-item">
+          <img src="shoes.webp" alt="Shoes" />
+          <h3>Shoes</h3>
+          <p>Stylish and comfortable footwear perfect for active kids.</p>
+          <button class="btn" onclick="showSection('shoes')">Explore More</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clothing Section -->
+    <section id="clothing">
+      <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+      <h2 class="section-title">Clothing Items</h2>
+      <div class="menu-category">
+        <div class="product">
+          <img src="redtshirt.webp" alt="Red T-shirt" />
+          <h3>Red T-shirt</h3>
+          <p class="price">Rs. 1200</p>
+          <p class="product-description">Comfortable 100% cotton t-shirt with vibrant red color. Perfect for casual wear and playtime. Available in sizes 2-12 years.</p>
+          <button class="btn" data-item="Red T-shirt" data-price="1200">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="bluejeans.avif" alt="Blue Jeans" />
+          <h3>Blue Jeans</h3>
+          <p class="price">Rs. 2500</p>
+          <p class="product-description">Stretchable denim jeans with reinforced knees. Classic blue wash with flexible fit for active kids. Sizes 2-14 years.</p>
+          <button class="btn" data-item="Blue Jeans" data-price="2500">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="yellowdress.jpg" alt="Yellow Dress" />
+          <h3>Yellow Dress</h3>
+          <p class="price">Rs. 3200</p>
+          <p class="product-description">Flowy summer dress with floral embroidery. Breathable cotton blend with adjustable straps. Perfect for parties. Sizes 4-12 years.</p>
+          <button class="btn" data-item="Yellow Dress" data-price="3200">Add to Cart</button>
+        </div>
+      </div>
+      <button class="cart-btn" onclick="openCart()">View Cart 🛒</button>
+    </section>
+
+    <!-- Toys Section -->
+    <section id="toys">
+      <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+      <h2 class="section-title">Toys</h2>
+      <div class="menu-category">
+        <div class="product">
+          <img src="toycar.webp" alt="Toy Car" />
+          <h3>Toy Car</h3>
+          <p class="price">Rs. 800</p>
+          <p class="product-description">Remote control sports car with LED lights and realistic engine sounds. Charges via USB. Suitable for ages 5+.</p>
+          <button class="btn" data-item="Toy Car" data-price="800">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="teddybear.webp" alt="Teddy Bear" />
+          <h3>Teddy Bear</h3>
+          <p class="price">Rs. 1500</p>
+          <p class="product-description">Super soft 18-inch teddy bear with embroidered eyes. Machine washable and perfect for cuddling. Ages 1+.</p>
+          <button class="btn" data-item="Teddy Bear" data-price="1500">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="JigsawPuzzle.webp" alt="Jigsaw Puzzle" />
+          <h3>Jigsaw Puzzle</h3>
+          <p class="price">Rs. 1200</p>
+          <p class="product-description">48-piece animal adventure puzzle with thick pieces. Develops problem-solving skills. Recommended for ages 4-8.</p>
+          <button class="btn" data-item="Jigsaw Puzzle" data-price="1200">Add to Cart</button>
+        </div>
+      </div>
+      <button class="cart-btn" onclick="openCart()">View Cart 🛒</button>
+    </section>
+
+    <!-- School Items Section -->
+    <section id="school">
+      <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+      <h2 class="section-title">School Items</h2>
+      <div class="menu-category">
+        <div class="product">
+          <img src="backpack.webp" alt="Backpack" />
+          <h3>Backpack</h3>
+          <p class="price">Rs. 2000</p>
+          <p class="product-description">Water-resistant backpack with multiple compartments and padded straps. Fits books, lunchbox, and water bottle. Ages 5-12.</p>
+          <button class="btn" data-item="Backpack" data-price="2000">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="notebook.webp" alt="Notebook" />
+          <h3>Notebook</h3>
+          <p class="price">Rs. 150</p>
+          <p class="product-description">A4 size 100-page notebook with colorful cover and quality paper. Single line ruling perfect for schoolwork.</p>
+          <button class="btn" data-item="Notebook" data-price="150">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="pencilcase.webp" alt="Pencil Case" />
+          <h3>Pencil Case</h3>
+          <p class="price">Rs. 300</p>
+          <p class="product-description">Durable zipper pencil case with elastic loops for 20+ pencils. Includes name tag. Multiple color options.</p>
+          <button class="btn" data-item="Pencil Case" data-price="300">Add to Cart</button>
+        </div>
+      </div>
+      <button class="cart-btn" onclick="openCart()">View Cart 🛒</button>
+    </section>
+
+    <!-- Shoes Section -->
+    <section id="shoes">
+      <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+      <h2 class="section-title">Shoes</h2>
+      <div class="menu-category">
+        <div class="product">
+          <img src="RunningShoes.jpg" alt="Running Shoes" />
+          <h3>Running Shoes</h3>
+          <p class="price">Rs. 3500</p>
+          <p class="product-description">Lightweight running shoes with breathable mesh and cushioned soles. Excellent grip for sports. Sizes UK 1-6.</p>
+          <button class="btn" data-item="Running Shoes" data-price="3500">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="LeatherBoots.jpg" alt="Leather Boots" />
+          <h3>Leather Boots</h3>
+          <p class="price">Rs. 5500</p>
+          <p class="product-description">Premium genuine leather ankle boots with waterproof lining. Durable rubber soles. Perfect for school uniform. Sizes UK 1-5.</p>
+          <button class="btn" data-item="Leather Boots" data-price="5500">Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="CasualSneakers.webp" alt="Casual Sneakers" />
+          <h3>Casual Sneakers</h3>
+          <p class="price">Rs. 3000</p>
+          <p class="product-description">Canvas sneakers with vulcanized rubber soles. Classic design available in 5 colors. Comfortable for daily wear. Sizes UK 1-6.</p>
+          <button class="btn" data-item="Casual Sneakers" data-price="3000">Add to Cart</button>
+        </div>
+      </div>
+      <button class="cart-btn" onclick="openCart()">View Cart 🛒</button>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+      <h2 class="section-title">Contact Us</h2>
+      <div class="contact-card">
+        <h2>🛒 Liyana Clothing Shop</h2>
+        <p><b>Address:</b> No. 245, Main Street, Matara Town, Matara 81000, Sri Lanka</p>
+        <p><b>Phone:</b> 076 285 2829</p>
+        <p><b>Email:</b> info@liyana.com</p>
+        <p><b>Business Hours:</b> Mon-Sat: 9AM - 8PM | Sunday: 10AM - 6PM</p>
+      </div>
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.260774920523!2d80.56671161476713!3d5.947952996397066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTYnNTIuMSJOIDgwwrAzNCcwMC4wIkU!5e0!3m2!1sen!2slk!4v1733411200000!5m2!1sen!2slk" 
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout">
+      <div class="checkout-form">
+        <h2 class="section-title" style="margin-bottom: 1rem;">Checkout</h2>
+        <div class="checkout-summary" id="checkout-summary">
+          <h3>Order Summary</h3>
+          <div id="checkout-items"></div>
+          <p id="checkout-total" style="font-size: 1.2rem; font-weight: bold; margin-top: 1rem;"></p>
+        </div>
+        
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="customer-name">Full Name *</label>
+            <input type="text" id="customer-name" required>
+          </div>
+          <div class="form-group">
+            <label for="customer-phone">Phone Number *</label>
+            <input type="tel" id="customer-phone" required>
+          </div>
+          <div class="form-group">
+            <label for="customer-address">Delivery Address *</label>
+            <textarea id="customer-address" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="payment-method">Payment Method *</label>
+            <select id="payment-method" required>
+              <option value="">Select payment method</option>
+              <option value="cash">Cash on Delivery</option>
+              <option value="card">Credit/Debit Card</option>
+              <option value="bank">Bank Transfer</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 1rem; justify-content: space-between; align-items: center;">
+            <button type="button" class="back-btn" onclick="showSection('home')">Cancel</button>
+            <button type="submit" class="btn" style="width: auto; padding: 0.8rem 2rem;">Place Order</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Order Success Section -->
+    <section id="order-success" style="display: none;">
+      <div class="order-success">
+        <h2 style="margin: 0 0 1rem 0; font-size: 2rem;">🎉 Order Placed Successfully!</h2>
+        <p style="font-size: 1.2rem; margin: 0;">Thank you for your order. We'll contact you soon to confirm delivery.</p>
+        <p style="font-size: 1.1rem; margin: 1rem 0 0 0;">Order ID: <strong id="order-id"></strong></p>
+        <button class="btn" onclick="showSection('home')" style="margin-top: 2rem; padding: 1rem 2rem; font-size: 1.1rem;">Continue Shopping</button>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cart-sidebar" aria-label="Shopping Cart" aria-live="polite" aria-hidden="true">
+    <button id="cart-close-btn" aria-label="Close cart">&times;</button>
+    <h3>Your Cart</h3>
+    <div id="cart-items"><p>No items in cart.</p></div>
+    <p id="cart-total"></p>
+    <button class="btn" onclick="goToCheckout()" id="checkout-btn" style="width: 100%; margin-top: 1rem; display: none;">Proceed to Checkout</button>
+  </aside>
+  <button id="open-cart-btn" aria-label="Open cart" type="button">🛒</button>
+  
+<footer>
+    <p>&copy; <span id="year"></span> Liyana Clothing Shop.</p>
+    <div class="social-links" aria-label="Social media links">
+        <a href="https://facebook.com" title="Facebook" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+            </svg>
+        </a>
+        <a href="https://twitter.com" title="Twitter" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+            </svg>
+        </a>
+        <a href="https://instagram.com" title="Instagram" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+            </svg>
+        </a>
+    </div>
+</footer>
+
+
+  <script>
+    // Show current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Section navigation
+    const sections = ['home', 'clothing', 'toys', 'school', 'shoes', 'contact', 'checkout', 'order-success'];
+    function showSection(id) {
+      sections.forEach(sec => {
+        document.getElementById(sec).classList.remove('active');
+        document.getElementById('nav-'+sec)?.classList.remove('active');
+      });
+      if (document.getElementById(id)) {
+        document.getElementById(id).classList.add('active');
+        document.getElementById('nav-'+id)?.classList.add('active');
+      }
+      window.scrollTo({top: 0, behavior:'smooth'});
+    }
+
+    // Cart functionality
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const openCartBtn = document.getElementById('open-cart-btn');
+    const closeCartBtn = document.getElementById('cart-close-btn');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElem = document.getElementById('cart-total');
+    const cartOpenLink = document.getElementById('cart-open-link');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    // Persistent cart
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    function updateCartUI() {
+      cartItemsContainer.innerHTML = '';
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>No items in cart.</p>';
+        cartTotalElem.textContent = '';
+        checkoutBtn.style.display = 'none';
+        return;
+      }
+      let total = 0;
+      cart.forEach(({item, price, quantity}, i) => {
+        total += price * quantity;
+        const itemElem = document.createElement('p');
+        itemElem.innerHTML = `${item} — Rs. ${price} x ${quantity} = Rs. ${(price*quantity).toLocaleString()}`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.style.cssText = `
+          margin-left: 8px;
+          background: #e76f51;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          padding: 2px 7px;
+          cursor: pointer;
+          font-size: 0.85rem;
+        `;
+        removeBtn.addEventListener('click', () => {
+          cart.splice(i, 1);
+          saveAndUpdate();
+        });
+        itemElem.appendChild(removeBtn);
+        cartItemsContainer.appendChild(itemElem);
+      });
+      cartTotalElem.textContent = `Total: Rs. ${total.toLocaleString()}`;
+      checkoutBtn.style.display = 'block';
+    }
+
+    function saveAndUpdate() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    // Add to cart functionality
+    document.querySelectorAll('.product button.btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.getAttribute('data-item');
+        const price = parseFloat(btn.getAttribute('data-price'));
+        const idx = cart.findIndex(ci => ci.item === item);
+        if (idx !== -1) {
+          cart[idx].quantity++;
+        } else {
+          cart.push({item, price, quantity:1});
+        }
+        saveAndUpdate();
+        openCart();
+      });
+    });
+
+    function openCart() {
+      cartSidebar.classList.add('open');
+      cartSidebar.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCart() {
+      cartSidebar.classList.remove('open');
+      cartSidebar.setAttribute('aria-hidden', 'true');
+    }
+
+    function goToCheckout() {
+      if (cart.length === 0) return;
+      
+      // Update checkout summary
+      const checkoutItems = document.getElementById('checkout-items');
+      const checkoutTotal = document.getElementById('checkout-total');
+      checkoutItems.innerHTML = '';
+      
+      let total = 0;
+      cart.forEach(({item, price, quantity}) => {
+        total += price * quantity;
+        const itemDiv = document.createElement('div');
+        itemDiv.style.cssText = 'margin-bottom: 0.5rem; display: flex; justify-content: space-between;';
+        itemDiv.innerHTML = `<span>${item} x${quantity}</span><span>Rs. ${(price*quantity).toLocaleString()}</span>`;
+        checkoutItems.appendChild(itemDiv);
+      });
+      checkoutTotal.textContent = `Total: Rs. ${total.toLocaleString()}`;
+      
+      showSection('checkout');
+      closeCart();
+    }
+
+    // Checkout form submission
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const orderData = {
+        id: 'LIY' + Date.now(),
+        customer: {
+          name: document.getElementById('customer-name').value,
+          phone: document.getElementById('customer-phone').value,
+          address: document.getElementById('customer-address').value,
+          payment: document.getElementById('payment-method').value
+        },
+        items: [...cart],
+        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        date: new Date().toLocaleString()
+      };
+
+      // Save order
+      const orders = JSON.parse(localStorage.getItem('orders')) || [];
+      orders.push(orderData);
+      localStorage.setItem('orders', JSON.stringify(orders));
+
+      // Clear cart
+      cart = [];
+      saveAndUpdate();
+
+      // Show success
+      document.getElementById('order-id').textContent = orderData.id;
+      showSection('order-success');
+    });
+
+    // Event listeners
+    openCartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    // nav “Cart” link
+    cartOpenLink.addEventListener('click', function (e) {
+          e.preventDefault();    // stop page from jumping to top / reloading
+      openCart();            // open the sidebar
+    });
+
+    // Close cart when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!cartSidebar.contains(e.target) && !openCartBtn.contains(e.target) && cartSidebar.classList.contains('open')) {
+        closeCart();
+      }
+    });
+
+    // Initialize
+    showSection('home');
+    updateCartUI();
+  </script>
+</body>
+</html>
